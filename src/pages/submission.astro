@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+const errors = { username: "", email: "", message: "" };
+let isValid = true;
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.json();
+    console.log("page data : ",data)
+    errors.username = data.username;
+    errors.email = data.email;
+    errors.message = data.message;
+    
+    errors.username !== "" || errors.email !== "" || errors.message !== "" && (isValid=false);    
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+---
+
+<Layout title="Exemple de formulaire sécurisé">
+	<main>
+		<h1>{isValid ? "Formulaire envoyé !" :"Erreur dans le formulaire 😕"}</h1>
+        {errors.username && <p>{errors.username}</p>}
+        {errors.message && <p>{errors.message}</p>}
+		<a href="/"><button>retour au formulaire</button></a>
+		</main>
+</Layout>

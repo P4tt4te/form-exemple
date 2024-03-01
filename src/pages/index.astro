@@ -5,7 +5,8 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Exemple de formulaire sécurisé">
 	<main>
 		<h1>Exemple de formulaire sécurisé</h1>
-		  <form action="https://script.google.com/macros/s/AKfycbyzMLUU3C_pcLyXmnHIs5INF6iUDmgFv0XA4mAx7NZW1K58DAmTXQDmbEQ4y6LVja0/exec" method="POST">
+		<!-- https://script.google.com/macros/s/AKfycbyzMLUU3C_pcLyXmnHIs5INF6iUDmgFv0XA4mAx7NZW1K58DAmTXQDmbEQ4y6LVja0/exec -->
+		  <form action="/submission" method="POST">
 			<div class="link-card">
 			  <label for="Name">Nom</label>
 			  <input type="text" name="Name" id="name" required />
