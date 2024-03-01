@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const errors = { username: "", email: "", message: "" };
+let isValid = false;
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("Name");
+    const email = data.get("Email");
+    const message = data.get("Message");
+
+    if (typeof name !== "string" || name.length < 3) {
+        errors.username += "Votre nom doit faire au moins 3 caractères. ";
+    }
+    if (typeof email !== "string") {
+        // TODO: implement an SSR valid email function
+        errors.username += "Votre email n'est pas valide. ";
+    }
+    if (typeof message !== "string" || message.length < 6) {
+      errors.message += "Votre message doit faire au moins 6 caractères. ";
+    }
+
+    const hasErrors = Object.values(errors).some(msg => msg)
+    !hasErrors && (isValid = true);
+    console.log("name : ", name && name);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+---
+
+<Layout title="Exemple de formulaire sécurisé">
+	<main>
+		<h1>{isValid ? "Formulaire envoyé !" :"Erreur dans le formulaire 😕"}</h1>
+        {errors.username && <p>{errors.username}</p>}
+        {errors.message && <p>{errors.message}</p>}
+		<a href="/"><button>retour au formulaire</button></a>
+		</main>
+</Layout>
